@@ -4,8 +4,8 @@ import store from './../../store';
 import webConfig from '../config';
 
 
-const devUrl = 'https://localhost:44341';
-const serverUrl = 'http://vuedev.uyeek.com/gradeservice';
+const devUrl = 'http://localhost:28958';
+const serverUrl = 'http://localhost:28958';
 
 const axiosInstance = axios.create({
   baseURL: serverUrl,
@@ -79,9 +79,9 @@ privateMembers.tipError = function tipError(describe) {
 axiosInstance.interceptors.request.use((request) => {
   /* eslint no-param-reassign: "error" */
   const token = cookie.get('token');
-  if (!token)location.href = 'http://saastest.uyeek.com/Login.aspx';
+  if (!token)location.href = `${server.baseURL}/account/login`;
   request.headers.common.token = token;
-  request.headers.common.operate = cookie.get('operate');
+  request.headers.common.authorization = cookie.get('authorization');
   return request;
 });
 
@@ -90,10 +90,10 @@ axiosInstance.interceptors.response.use((response) => {
   if (response.status !== 200) {
     privateMembers.tipError();
   }
-  if (!response.headers.operate) {
-    privateMembers.tipError('异常 operate');
+  if (!response.headers.token) {
+    privateMembers.tipError('异常操作');
   }
-  cookie.set('operate', response.headers.operate);
+  cookie.set('token', response.headers.token);
   return response;
 }, (error) => {
   privateMembers.tipError();
@@ -107,33 +107,35 @@ communication.install = function install(Vue, options) {
     server[key] = {};
     const element = api[key];
     for (const item of element) {
-      server[key][item.name] = (params, config) => new Promise((resolve, reject) => {
-        let result = null;
-        const method = item.method.toLowerCase();
-        if (method === 'get' || method === 'delete') {
-          result = axiosInstance[item.method](item.url, { params, config });
-        } else {
-          result = axiosInstance[item.method](item.url, config && config.paramsType === 'json' ? params : privateMembers.toFormData(params), config);
-        }
-
-        result.then((response) => {
-          if (response.data) {
-            if (response.data.code === 0) resolve(response.data);
-            else {
-              privateMembers.tipError(response.data.data);
-              reject(response.data.data);
-              // if (response.data.code >= 12000) {}
-            }
+      if (item.name && item.method && item.url) {
+        server[key][item.name] = (params, config) => new Promise((resolve, reject) => {
+          let result = null;
+          const method = item.method.toLowerCase();
+          if (method === 'get' || method === 'delete') {
+            result = axiosInstance[item.method](item.url, { params, config });
+          } else {
+            result = axiosInstance[item.method](item.url, config && config.paramsType === 'json' ? params : privateMembers.toFormData(params), config);
           }
-        }).catch((error) => {
-          reject(error.message);
+
+          result.then((response) => {
+            if (response.data) {
+              if (response.data.code === 0) resolve(response.data);
+              else {
+                privateMembers.tipError(response.data.data);
+                reject(response.data.data);
+                // if (response.data.code >= 12000) {}
+              }
+            }
+          }).catch((error) => {
+            reject(error.message);
+          });
         });
-      });
+      }
     }
   }
 
-  // axiosInstance.defaults.headers.common.operate = sessionStorage.getItem('operate');
   // axiosInstance.defaults.headers.common.token = sessionStorage.getItem('token');
+  // axiosInstance.defaults.headers.common.authorization = sessionStorage.getItem('authorization');
   Vue.prototype.$httpGet = http.get;
   Vue.prototype.$httpPost = http.post;
   Vue.prototype.$httpDelete = http.delete;
