@@ -4,8 +4,8 @@ import store from './../../store';
 import webConfig from '../config';
 
 
-const devUrl = 'http://localhost:28958';
-const serverUrl = 'http://localhost:28958';
+const devUrl = 'http://127.0.0.1/service';
+const serverUrl = 'http://127.0.0.1/service';
 
 const axiosInstance = axios.create({
   baseURL: serverUrl,
@@ -79,7 +79,7 @@ privateMembers.tipError = function tipError(describe) {
 axiosInstance.interceptors.request.use((request) => {
   /* eslint no-param-reassign: "error" */
   const token = cookie.get('token');
-  if (!token)location.href = `${server.baseURL}/account/login`;
+  // if (!token)location.href = `${server.baseURL}/account/login`;
   request.headers.common.token = token;
   request.headers.common.authorization = cookie.get('authorization');
   return request;
@@ -119,10 +119,10 @@ communication.install = function install(Vue, options) {
 
           result.then((response) => {
             if (response.data) {
-              if (response.data.code === 0) resolve(response.data);
+              if (response.data.Code === 0) resolve(response.data);
               else {
-                privateMembers.tipError(response.data.data);
-                reject(response.data.data);
+                privateMembers.tipError(response.data.Data);
+                reject(response.data.Data);
                 // if (response.data.code >= 12000) {}
               }
             }

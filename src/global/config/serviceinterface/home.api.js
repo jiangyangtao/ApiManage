@@ -1,12 +1,12 @@
 const home = [
   {
-    name: 'login',
-    url: 'account/login',
-    method: 'post',
+    name: 'index',
+    url: '/home/index',
+    method: 'get',
   },
   {
-    name: 'register',
-    url: 'account/register',
+    name: 'sendActivationMail',
+    url: '/home/SendActivationMail',
     method: 'post',
   },
 ];
