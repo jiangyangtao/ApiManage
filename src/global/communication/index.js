@@ -66,13 +66,12 @@ privateMembers.toFormData = function toFormData(data) {
   return formData;
 };
 
-privateMembers.tipError = function tipError(describe) {
+privateMembers.tipError = function tipError(message) {
   // store.LoadStore.actions.hide();
-  // iView.Notice.error({
-  //   title: '错误',
-  //   desc: describe || '系统异常，请稍后再试！',
-  //   duration: 4,
-  // });
+  return privateMembers.Vue.prototype.$notify.error({
+    title: '错误',
+    message: message || '系统异常，请稍后再试！',
+  });
 };
 
 // 请求拦截
@@ -90,10 +89,10 @@ axiosInstance.interceptors.response.use((response) => {
   if (response.status !== 200) {
     privateMembers.tipError();
   }
-  if (!response.headers.token) {
-    privateMembers.tipError('异常操作');
-  }
-  cookie.set('token', response.headers.token);
+  // if (!response.headers.token) {
+  //   privateMembers.tipError('异常操作');
+  // }
+  // cookie.set('token', response.headers.token);
   return response;
 }, (error) => {
   privateMembers.tipError();
@@ -121,8 +120,8 @@ communication.install = function install(Vue, options) {
             if (response.data) {
               if (response.data.Code === 0) resolve(response.data);
               else {
-                privateMembers.tipError(response.data.Data);
-                reject(response.data.Data);
+                if (!config || !config.notNotify) privateMembers.tipError(response.data.Message);
+                reject(response.data.Message);
                 // if (response.data.code >= 12000) {}
               }
             }

@@ -10,11 +10,8 @@ import global from './global';
 import modules from './store';
 import App from './components/App';
 import routes from './router';
-import './assets/styles/bootstrap.min.css';
-import './assets/styles/font-awesome.min.css';
 import './assets/styles/material-design-iconic-font.min.css';
-import './assets/styles/util.css';
-import './assets/styles/main.css';
+import './assets/styles/login.css';
 
 Vue.use(ElementUI);
 Vue.use(Vuex);
