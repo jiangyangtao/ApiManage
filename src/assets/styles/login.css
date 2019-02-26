@@ -5,7 +5,7 @@ body { height: 100%;	font-family: 'Microsoft Yahei', sans-serif;}
 .login-container .wrap-login { padding: 65px 55px 54px 65px; width: 500px; background: #fff; border-radius: 10px; overflow: hidden; }
 .login-container .wrap-login .login-title { padding-bottom: 40px; display: block; font-family: 'Microsoft Yahei'; font-size: 39px; color: #333333; line-height: 1.2; text-align: center; }
 .login-container .wrap-login .error-tip { height:20px;font-size: 14px;color: red;text-align: center;margin-bottom: 5px;}
-.login-container .wrap-login .username { margin-bottom: 25px; }
+.login-container .wrap-login .email { margin-bottom: 25px; }
 .login-container .wrap-login .wrap-input { width: 100%; position: relative; border-bottom: 2px solid #d9d9d9; }
 .login-container .wrap-login .wrap-input input {outline: none; border: none;}
 .login-container .wrap-login .wrap-input input::-webkit-input-placeholder { color: #adadad; }
@@ -24,6 +24,10 @@ body { height: 100%;	font-family: 'Microsoft Yahei', sans-serif;}
 .login-container .wrap-login .wrap-input .focus-input::after {content: attr(data-symbol); font-family: Material-Design-Iconic-Font; color: #adadad; font-size: 22px; display: -webkit-box; display: -webkit-flex; display: -moz-box; display: -ms-flexbox; display: flex; align-items: center; justify-content: center; position: absolute; height: calc(100% - 20px); bottom: 0;  left: 0; padding-left: 13px; padding-top: 3px; }
 .login-container .wrap-login .wrap-input .input:focus + .focus-input::before { width: 100%; }
 .login-container .wrap-login .wrap-input .input:focus + .focus-input::after { color: #a64bf4; }
+.login-container .wrap-login .verification-code-wrap { margin-top: 25px; }
+.login-container .wrap-login .verification-code-wrap .label-input {display: block;}
+.login-container .wrap-login .verification-code-wrap .input {display: inline-block;width:65%;}
+.login-container .wrap-login .verification-code-wrap .verification-code {cursor: pointer;margin-top: 5px;float: right;}
 .login-container .wrap-login .forget-password { color: #666666; text-align: right; padding: 8px 0 31px; }
 .login-container .wrap-login .forget-password a { text-decoration: none; font-family: 'Microsoft Yahei'; font-size: 14px; line-height: 1.7; color: #666666; margin: 0px; transition: all 0.4s; -webkit-transition: all 0.4s; -o-transition: all 0.4s; -moz-transition: all 0.4s;}
 .login-container .wrap-login .forget-password a:hover { color: #a64bf4; }

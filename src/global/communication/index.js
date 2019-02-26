@@ -75,24 +75,17 @@ privateMembers.tipError = function tipError(message) {
 };
 
 // 请求拦截
-axiosInstance.interceptors.request.use((request) => {
-  /* eslint no-param-reassign: "error" */
-  const token = cookie.get('token');
-  // if (!token)location.href = `${server.baseURL}/account/login`;
-  request.headers.common.token = token;
-  request.headers.common.authorization = cookie.get('authorization');
-  return request;
-});
+// axiosInstance.interceptors.request.use((request) => {
+//   /* eslint no-param-reassign: "error" */
+//   if (!request.headers.common.authorization) request.headers.common.authorization = cookie.get('authorization');
+//   return request;
+// });
 
 // Http 响应拦截，处理非200状态和异常的请求
 axiosInstance.interceptors.response.use((response) => {
   if (response.status !== 200) {
     privateMembers.tipError();
   }
-  // if (!response.headers.token) {
-  //   privateMembers.tipError('异常操作');
-  // }
-  // cookie.set('token', response.headers.token);
   return response;
 }, (error) => {
   privateMembers.tipError();
@@ -100,14 +93,16 @@ axiosInstance.interceptors.response.use((response) => {
 });
 
 communication.install = function install(Vue, options) {
+  /* eslint no-param-reassign: "error" */
   privateMembers.Vue = Vue;
   const api = webConfig.serviceApi;
   for (const key in api) {
     server[key] = {};
     const element = api[key];
-    for (const item of element) {
-      if (item.name && item.method && item.url) {
-        server[key][item.name] = (params, config) => new Promise((resolve, reject) => {
+    for (const subKey in element) {
+      const item = element[subKey];
+      if (item.method && item.url) {
+        server[key][subKey] = (params, config) => new Promise((resolve, reject) => {
           let result = null;
           const method = item.method.toLowerCase();
           if (method === 'get' || method === 'delete') {
@@ -133,8 +128,8 @@ communication.install = function install(Vue, options) {
     }
   }
 
-  // axiosInstance.defaults.headers.common.token = sessionStorage.getItem('token');
-  // axiosInstance.defaults.headers.common.authorization = sessionStorage.getItem('authorization');
+  const authorization = cookie.get('authorization');
+  if (authorization) axiosInstance.defaults.headers.common.authorization = authorization;
   Vue.prototype.$httpGet = http.get;
   Vue.prototype.$httpPost = http.post;
   Vue.prototype.$httpDelete = http.delete;

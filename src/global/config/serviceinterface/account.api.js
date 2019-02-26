@@ -1,14 +1,12 @@
-const account = [
-  {
-    name: 'login',
+const account = {
+  login: {
     url: 'account/login',
     method: 'post',
   },
-  {
-    name: 'register',
+  register: {
     url: 'account/register',
     method: 'post',
   },
-];
+};
 
 export default account;
