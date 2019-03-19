@@ -8,9 +8,16 @@ notification.buildConfiguration = function buildConfiguration(title, message, ty
   return config;
 };
 
+notification.errorHandler = (error, vm) => {
+  console.error(vm);
+  console.error(error);
+};
+
 notification.install = function install(Vue, options) {
   /* eslint no-param-reassign: ["error", { "props": false }] */
   const notify = Vue.prototype.$notify;
+  Vue.config.errorHandler = notification.errorHandler;
+  Vue.prototype.$throw = error => notification.errorHandler(error, this);
   notice.info = function info(message) {
     const config = notification.buildConfiguration('提示', message);
     return notify.info(config);

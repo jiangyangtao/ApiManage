@@ -40,3 +40,9 @@ body { height: 100%;	font-family: 'Microsoft Yahei', sans-serif;}
 .login-container .wrap-login .register a { text-decoration: none; font-size: 14px; line-height: 1.5; color: #333333; text-transform: uppercase; }
 .login-container .wrap-login .register a:hover { color: #a64bf4; }
 
+.register-container {width: 600px; margin:50px auto;border-radius: 4px; border: 1px solid #ebeef5; background-color: #fff; overflow: hidden; color: #303133; transition: 0.3s;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);}
+.register-container .register-title {margin-bottom:35px;font-size: 18px; color: #606266; line-height: 40px; padding: 0 12px 0 0; box-sizing: border-box;}
+.register-container .el-form {margin:15px 0 50px 95px;}
+.register-container .el-form .el-form-item {margin-bottom: 40px;}
+.register-container .el-form .el-form-item .email{display: block;}
+.register-container .el-form .el-form-item:nth-last-child(1) {margin-top: 60px;}

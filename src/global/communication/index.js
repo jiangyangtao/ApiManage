@@ -86,6 +86,7 @@ axiosInstance.interceptors.response.use((response) => {
   if (response.status !== 200) {
     privateMembers.tipError();
   }
+  cookie.set('token', response.headers.token);
   return response;
 }, (error) => {
   privateMembers.tipError();

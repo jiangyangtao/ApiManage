@@ -11,7 +11,7 @@ import modules from './store';
 import App from './components/App';
 import routes from './router';
 import './assets/styles/material-design-iconic-font.min.css';
-import './assets/styles/login.css';
+import './assets/styles/main.css';
 
 Vue.use(ElementUI);
 Vue.use(Vuex);
