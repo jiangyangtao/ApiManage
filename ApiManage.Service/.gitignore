@@ -1,0 +1,13 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs/ApiManage.Service/v15
+/ApiManage.Service/obj
+/src/Service/.vs/ApiManage.Service/v15
+/src/Service/ApiManage.Service/obj
+/src/Service/ApiManage.Service/bin/Debug/netcoreapp2.1
+/src/Service/.vs/config
+/src/Service/ApiManage.Service/log
+/.vs
+/src/Service/ApiManage.Service/bin/Release/netcoreapp2.1
