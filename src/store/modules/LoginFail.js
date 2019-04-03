@@ -1,4 +1,4 @@
-import LoadType from '../types/LoginFail';
+import LoadType from '../types/LoginFailType';
 
 const state = {
   failCount: 0,

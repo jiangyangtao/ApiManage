@@ -29,7 +29,7 @@
     </el-form-item>
     <el-form-item>
       <el-button @click="cancel">取消</el-button>
-      <el-button type="primary" @click="submit('form')">立即注册</el-button>
+      <el-button type="primary" @click="submit('form')" :loading="loading">注册</el-button>
     </el-form-item>
   </el-form>
 </el-container>
@@ -37,13 +37,15 @@
 <script>
 
 import { passwordGenerator } from 'javascript-commons';
+import { mapGetters } from 'vuex';
+import Loading from './../../store/types/loadingType';
 
 export default {
   data() {
     return {
       form: {
-        email: '',
-        name: '',
+        email: 'yangtaojiang@vip.qq.com',
+        name: '江洋涛',
         gender: '1',
         password: '',
       },
@@ -73,8 +75,11 @@ export default {
       },
     };
   },
+  computed: mapGetters({
+    loading: Loading.types.getters.loading,
+  }),
   mounted() {
-
+    this.createPassword();
   },
   methods: {
     submit(formName) {
@@ -115,7 +120,9 @@ export default {
       this.$refs.passwordInput.$refs.input.type = 'password';
     },
     createPassword() {
-      this.form.password = passwordGenerator.newPassword(12, false, true);
+      this.form.password = passwordGenerator.newPassword(14, false, true);
+      this.$refs.passwordInput.$refs.input.focus();
+      this.$refs.passwordInput.$refs.input.blur();
     },
   },
 };

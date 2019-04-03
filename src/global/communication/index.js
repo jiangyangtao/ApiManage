@@ -67,7 +67,6 @@ privateMembers.toFormData = function toFormData(data) {
 };
 
 privateMembers.tipError = function tipError(message) {
-  // store.LoadStore.actions.hide();
   return privateMembers.Vue.prototype.$notify.error({
     title: '错误',
     message: message || '系统异常，请稍后再试！',
@@ -112,16 +111,18 @@ communication.install = function install(Vue, options) {
             result = axiosInstance[item.method](item.url, config && config.paramsType === 'json' ? params : privateMembers.toFormData(params), config);
           }
 
+          store.Loading.actions.showLoading();
           result.then((response) => {
+            store.Loading.actions.hideLoading();
             if (response.data) {
               if (response.data.Code === 0) resolve(response.data);
               else {
                 if (!config || !config.notNotify) privateMembers.tipError(response.data.Message);
                 reject(response.data.Message);
-                // if (response.data.code >= 12000) {}
               }
             }
           }).catch((error) => {
+            store.Loading.actions.hideLoading();
             reject(error.message);
           });
         });
